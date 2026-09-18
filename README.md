@@ -98,4 +98,8 @@ Project ini menggunakan MySQL dengan nama database `library_system`. Database te
 
 ## Penulis
 
+<<<<<<< HEAD
 **Intania Amanda Syifa**
+=======
+**Intania Amanda Syifa**
+>>>>>>> cf671124aa4eeeecd44b8f6ad6907d900140d7d3
