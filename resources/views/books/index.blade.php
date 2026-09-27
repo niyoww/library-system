@@ -4,24 +4,26 @@
 
 @section('content')
 
-    <h2>Daftar Buku</h2>
+<h2>Daftar Buku</h2>
 
-    <ul>
-        @foreach($books as $book)
-            <li>
-                <strong>{{ $book['title'] }}</strong>
-                <br>
-                Kategori: {{ $book['category'] }}
-                <br>
-                Penulis: {{ $book['author'] }}
-                <br>
-                Peminjam: {{ $book['borrower'] }}
-                <br>
-                <a href="/books/{{ $book['id'] }}">Lihat Detail</a>
-            </li>
+<p>Daftar buku yang tersedia di perpustakaan.</p>
 
-            <br>
-        @endforeach
-    </ul>
+<p>http://127.0.0.1:8000/books</p>
+
+@foreach($books as $book)
+
+    <h3>{{ $book->title }}</h3>
+
+    <p>Penulis: {{ $book->author }}</p>
+    <p>Tahun: {{ $book->year }}</p>
+    <p>Stok: {{ $book->stock }}</p>
+
+    @if($book->stock > 0)
+        <p>Stok tersedia</p>
+    @else
+        <p>Stok habis</p>
+    @endif
+
+@endforeach
 
 @endsection

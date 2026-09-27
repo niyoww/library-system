@@ -2,53 +2,52 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Book;
+use Illuminate\Http\Request;
+
 class BookController extends Controller
 {
+    // Menampilkan Daftar Buku
     public function index()
     {
-        $books = [
-            [
-                'id' => 1,
-                'category' => 'Dongeng',
-                'title' => 'Hansel and Gretel',
-                'author' => 'Brothers Grimm',
-                'borrower' => 'Intan'
-            ],
-            [
-                'id' => 2,
-                'category' => 'Fantasy',
-                'title' => "Harry Potter",
-                'author' => 'J.K. Rowling',
-                'borrower' => 'Nia'
-            ],
-            [
-                'id' => 3,
-                'category' => 'Action',
-                'title' => 'Jurassic Park',
-                'author' => 'Michael Crichton',
-                'borrower' => 'Amanda'
-            ],
-            [
-                'id' => 4,
-                'category' => 'Manga',
-                'title' => 'One Piece',
-                'author' => 'Eiichiro Oda',
-                'borrower' => 'Syifa'
-            ],
-            [
-                'id' => 5,
-                'category' => 'Horror',
-                'title' => 'It',
-                'author' => 'Stephen King',
-                'borrower' => 'Eyyin'
-            ]
-        ];
+        $title = "Daftar Buku";
+        $description = "Berikut adalah daftar buku yang tersedia";
+    //    $books = [
+    //         [
+    //             'judul' => 'Pemrograman PHP untuk Pemula',
+    //             'penulis' => 'Budi Santoso',
+    //             'tahun_terbit' => 2021,
+    //         ],
+    //         [
+    //             'judul' => 'Panduan Master Web Development',
+    //             'penulis' => 'Siti Aminah',
+    //             'tahun_terbit' => 2022,
+    //         ],
+    //         [
+    //             'judul' => 'Tutorial Menjadi Orang Sukses',
+    //             'penulis' => 'Andi Pratama',
+    //             'tahun_terbit' => 2019,
+    //         ],
+    //         [
+    //             'judul' => 'Panduan Hidup Sehat & Berkah',
+    //             'penulis' => 'Rahmat Hidayat',
+    //             'tahun_terbit' => 2020,
+    //         ],
+    //         [
+    //             'judul' => 'Strategi Manajemen Keuangan',
+    //             'penulis' => 'Dewi Lestari',
+    //             'tahun_terbit' => 2023,
+    //         ],
+    //     ];
 
-        return view('books.index', compact('books'));
+        $books = Book::all();
+
+        return view('books.index', compact ('title', 'description', 'books'));
     }
 
-    public function show($id)
+    public function show ($id)
     {
-        return view('books.show', compact('id'));
+        $book = Book::findOrFail($id);
+        return view('books.show', compact('book'));
     }
 }

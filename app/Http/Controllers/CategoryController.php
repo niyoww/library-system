@@ -2,18 +2,23 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
+
 class CategoryController extends Controller
 {
+    // // Menambpilkan Kategori Buku
     public function index()
     {
+        $title = "Daftar Kategori";
+        $description = "Berikut adalah daftar kategori buku yang tersedia";
         $categories = [
-            'Dongeng',
-            'Fantasy',
-            'Action',
-            'Manga',
-            'Horror'
+            'Pemrograman',
+            'Web Development',
+            'Cloud Computing',
+            'AI',
+            'Networking'
         ];
 
-        return view('categories.index', compact('categories'));
+        return view('categories.index', compact ('title', 'description', 'categories'));
     }
 }
