@@ -7,47 +7,60 @@ use Illuminate\Http\Request;
 
 class BookController extends Controller
 {
-    // Menampilkan Daftar Buku
     public function index()
     {
-        $title = "Daftar Buku";
-        $description = "Berikut adalah daftar buku yang tersedia";
-    //    $books = [
-    //         [
-    //             'judul' => 'Pemrograman PHP untuk Pemula',
-    //             'penulis' => 'Budi Santoso',
-    //             'tahun_terbit' => 2021,
-    //         ],
-    //         [
-    //             'judul' => 'Panduan Master Web Development',
-    //             'penulis' => 'Siti Aminah',
-    //             'tahun_terbit' => 2022,
-    //         ],
-    //         [
-    //             'judul' => 'Tutorial Menjadi Orang Sukses',
-    //             'penulis' => 'Andi Pratama',
-    //             'tahun_terbit' => 2019,
-    //         ],
-    //         [
-    //             'judul' => 'Panduan Hidup Sehat & Berkah',
-    //             'penulis' => 'Rahmat Hidayat',
-    //             'tahun_terbit' => 2020,
-    //         ],
-    //         [
-    //             'judul' => 'Strategi Manajemen Keuangan',
-    //             'penulis' => 'Dewi Lestari',
-    //             'tahun_terbit' => 2023,
-    //         ],
-    //     ];
-
         $books = Book::all();
 
-        return view('books.index', compact ('title', 'description', 'books'));
+        return view('books.index', compact('books'));
     }
 
-    public function show ($id)
+    public function create()
     {
-        $book = Book::findOrFail($id);
+        $title = 'Tambah Buku';
+
+        return view('books.create', compact('title'));
+    }
+
+    public function store(Request $request)
+    {
+        Book::create([
+            'title' => $request->title,
+            'author' => $request->author,
+            'year' => $request->year,
+            'stock' => $request->stock,
+        ]);
+
+        return redirect()->route('books.index');
+    }
+
+    public function show(Book $book)
+    {
         return view('books.show', compact('book'));
+    }
+
+    public function edit(Book $book)
+    {
+        $title = 'Edit Buku';
+
+        return view('books.edit', compact('book', 'title'));
+    }
+
+    public function update(Request $request, Book $book)
+    {
+        $book->update([
+            'title' => $request->title,
+            'author' => $request->author,
+            'year' => $request->year,
+            'stock' => $request->stock,
+        ]);
+
+        return redirect()->route('books.index');
+    }
+
+    public function destroy(Book $book)
+    {
+        $book->delete();
+
+        return redirect()->route('books.index');
     }
 }

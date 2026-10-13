@@ -3,27 +3,21 @@
 @section('title', 'Daftar Buku')
 
 @section('content')
+    <a href="{{ route('books.create') }}">Tambah Buku</a>
 
-<h2>Daftar Buku</h2>
-
-<p>Daftar buku yang tersedia di perpustakaan.</p>
-
-<p>http://127.0.0.1:8000/books</p>
-
-@foreach($books as $book)
-
-    <h3>{{ $book->title }}</h3>
-
-    <p>Penulis: {{ $book->author }}</p>
-    <p>Tahun: {{ $book->year }}</p>
-    <p>Stok: {{ $book->stock }}</p>
-
-    @if($book->stock > 0)
-        <p>Stok tersedia</p>
-    @else
-        <p>Stok habis</p>
-    @endif
-
-@endforeach
-
+    <ul>
+        @foreach($books as $book)
+                <h3>{{ $book->title }}</h3>
+                <P>penulis: {{ $book->author }}</P>
+                <P>Tahun: {{ $book->year }}</P>
+                <P>Stok: {{ $book->stock }}</P>
+                <a href="{{ route('books.show', $book) }}">Detail </a>
+                <a href="{{ route('books.edit', $book) }}">Edit buku </a>
+                <form action="{{ route('books.destroy', $book) }}" method="POST" style="display: inline-block;">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit">Hapus</button>
+                </form>
+        @endforeach
+    </ul>
 @endsection
