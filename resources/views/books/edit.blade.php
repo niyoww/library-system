@@ -1,19 +1,67 @@
 @extends('layouts.app')
 
-@section('title', $title)
+@section('title', 'Edit Buku')
 
 @section('content')
-    <form action="{{ route('books.update', $book) }}" method="POST">
-        @csrf
-        @method('PUT')
+<form action="{{ route('books.update', $book) }}" method="POST">
+    @csrf
+    @method('PUT')
 
-        <input type="text" name="title" placeholder="judul buku" value="{{ $book->title }}">
-        <input type="text" name="author" placeholder="penulis" value="{{ $book->author }}">
-        <input type="number" name="year" placeholder="tahun" value="{{ $book->year }}">
-        <input type="number" name="stock" placeholder="stok" value="{{ $book->stock }}">
+    <div>
+        <label>Judul Buku</label>
+        <input type="text" name="title" placeholder="Judul Buku" value="{{ old('title', $book->title) }}">
+        @error('title')
+            <p>{{ $message }}</p>
+        @enderror
+    </div>
 
-        <button type="submit">
+    <div>
+        <label>Penulis Buku</label>
+        <input type="text" name="author" placeholder="Penulis" value="{{ old('author', $book->author) }}">
+        @error('author')
+            <p>{{ $message }}</p>
+        @enderror
+    </div>
+
+    <div>
+        <label>Tahun Terbit</label>
+        <input type="number" name="year" placeholder="Tahun Terbit" value="{{ old('year', $book->year) }}">
+        @error('year')
+            <p>{{ $message }}</p>
+        @enderror
+    </div>
+
+    <div>
+        <label>Jumlah Stok Buku</label>
+        <input type="number" name="stock" placeholder="Stok Buku" value="{{ old('stock', $book->stock) }}">
+        @error('stock')
+            <p>{{ $message }}</p>
+        @enderror
+    </div>
+
+    <div>
+        <label for="category_id">Kategori</label>
+        <select name="category_id" id="category_id">
+            <option value="">Pilih kategori</option>
+
+           @foreach ($categories as $category)
+                <option
+                value="{{ $category->id }}"
+                @selected(old('category_id', $book->category_id) == $category->id)
+                >
+                {{ $category->name }}
+                </option>
+            @endforeach
+        </select>
+
+        @error('category_id')
+            <p>{{ $message }}</p>
+        @enderror
+
+    </div>
+
+    <button type="submit">
         Update
-     </button>
-    </form>
+    </button>
+</form>
 @endsection
