@@ -18,11 +18,20 @@
                 <P>Stok: {{ $book->stock }}</P>
                 <a href="{{ route('books.show', $book) }}">Detail </a>
                 <a href="{{ route('books.edit', $book) }}">Edit buku </a>
-                <form action="{{ route('books.destroy', $book) }}" method="POST" style="display: inline-block;">
-                    @csrf
-                    @method('DELETE')
-                    <button type="submit">Hapus</button>
-                </form>
+
+
+                @can('delete', $book)
+                    <form action="{{ route('books.destroy', $book->id) }}"
+                        method="POST"
+                        onsubmit="return confirm('Yakin ingin menghapus buku ini?')">
+
+                        @csrf
+                        @method('DELETE')
+
+                        <button type="submit">Delete</button>
+                    </form>
+                @endcan
+
         @endforeach
     </ul>
 @endsection

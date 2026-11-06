@@ -10,7 +10,6 @@ use App\Http\Controllers\AuthController;
 Route::middleware('guest')->group(function () {
     Route::get('/login', [AuthController::class, 'showLogin'])
         ->name('login');
-
     Route::post('/login', [AuthController::class, 'login'])
         ->name('login.submit');
 });
@@ -34,4 +33,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/members', [MemberController::class, 'index']);
 });
 
+ route::middleware(['auth', 'can:manage-users'])->group(function () {
+    route::get ('/users', function () {
+        return "Hallo";
+    });
 
+ });
